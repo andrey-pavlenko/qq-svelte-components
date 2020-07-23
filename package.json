@@ -1,6 +1,6 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
+  "name": "qq-svelte-components",
+  "version": "0.1.0",
   "scripts": {
     "start": "sirv public --port 8080",
     "build": "npm run build:application-first",
