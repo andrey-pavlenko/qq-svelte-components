@@ -9,7 +9,6 @@ export default config({
   input: pathJoin(srcPath, 'main.ts'),
   name: 'ApplicationFirst',
   jsFile: pathJoin(buildPath, 'application-first/application-first.js'),
-  cssFile: pathJoin(buildPath, 'application-first/application-first.css'),
   plugins: [
     copy({
       targets: [

@@ -14,7 +14,6 @@ import { serve } from './serve';
  * @param {string} opts.input
  * @param {string} opts.name
  * @param {string} opts.jsFile
- * @param {string} opts.cssFile
  * @param {Array} opts.plugins?
  * @returns {object}
  */
