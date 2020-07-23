@@ -6,13 +6,13 @@
 
 <script lang="ts">
   export let name: string;
-  export let surName: string = "No surName defined";
+  export let surName: string = 'No surName defined';
 
   function someTest(input: string): string {
-    if (input === "1") {
-      return "one";
+    if (input === '1') {
+      return 'one';
     }
-    return "many";
+    return 'many';
   }
 </script>
 

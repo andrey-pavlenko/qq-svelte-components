@@ -10,9 +10,9 @@
     "dev:application-first": "rimraf public/application-first && rollup -w -c src/application-first/rollup.config.js"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^12.0.0",
+    "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
-    "@rollup/plugin-typescript": "^4.0.0",
+    "@rollup/plugin-typescript": "^5.0.2",
     "@tsconfig/svelte": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
@@ -27,8 +27,8 @@
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-postcss": "^3.1.3",
     "rollup-plugin-svelte": "^5.0.3",
-    "rollup-plugin-terser": "^5.1.2",
-    "sirv-cli": "^0.4.4",
+    "rollup-plugin-terser": "^6.1.0",
+    "sirv-cli": "^1.0.3",
     "svelte": "^3.0.0",
     "svelte-check": "^0.1.0",
     "svelte-preprocess": "^4.0.0",
