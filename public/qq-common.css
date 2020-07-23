@@ -1,0 +1,226 @@
+body {
+	padding-top: 60px;
+}
+
+
+.hspan {
+	border-bottom: 2px solid black;
+	margin-bottom: 10px;
+}
+
+.hspan h3 {
+	line-height: 30px;
+	margin-bottom: 0px;
+}
+
+.hspan h4 {
+	margin-bottom: 2px;
+}
+
+.agency-header {
+	width: 100%;
+	
+}
+
+.agency-header  td {
+	text-align: right;	
+}
+
+.agency-header  td:first-child {
+	text-align: left;
+}
+
+.qq-brand span {
+	color: #A02300;
+	font-weight: bold;
+}
+
+.qq-brand:hover span {
+	color: #DC2300;
+}
+
+footer {
+	position: relative;
+	margin-top: 30px;
+    margin-bottom: 10px;
+	border-top: 1px solid #E0E0E0;
+	padding-top: 10px;
+	font-size:	12px;
+	color:	#505050;
+	line-height: 12px;
+}
+
+#social-media {
+	position: absolute;
+	right: 0px;
+	top: 6px;	
+}
+
+#social-media img {
+	margin-left: 3px;
+}
+
+
+.form-horizontal .alert-inline {
+	display: inline;
+}
+
+/**************** TABLE SORTER ***********************/
+
+table.tablesorter thead tr th.header {
+	background-image: url(/img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.tablesorter thead tr th.headerSortUp {
+	background-image: url(/img/asc.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.tablesorter thead tr th.headerSortDown {
+	background-image: url(/img/desc.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+/**************** NEW SMS DISTRIBUTION ***********************/
+
+#new-smscampaign textarea {
+	width: 100%
+}
+
+#new-smscampaign .calc p {
+	font-size: 20px; 
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+#new-smscampaign .sender {
+	font-weight: 400;
+}
+
+#new-smscampaign #clients-table {
+	max-height: 200px;
+	overflow: auto;
+}
+
+/**************** AUTOCOMPLETE ***********************/
+
+.ui-autocomplete-loading {
+	background: white url('/img/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+ul.ui-widget li.ui-menu-item:nth-child(2n) a {
+	background-color:  #F6F6F6;
+}
+
+ul.ui-widget li.ui-menu-item {
+	list-style-image: none;
+	margin-bottom: 2px; 
+}
+
+table.autocomplete td {
+	font-size: 14px;
+	padding-left: 4px;
+	border-right: 1px solid #F2F2F2;	
+}
+
+table.autocomplete td:first-child {
+	padding-left: 0px;
+}
+
+table.autocomplete td:last-child {
+	border-right: 0px solid black;
+}
+
+td.autocomplete-name {
+	width: 270px;
+}
+
+td.autocomplete-phone {
+	width: 170px;
+}
+
+td.autocomplete-email {
+	width: 220px;
+}
+
+td.autocomplete-accountno {
+	width: 65px;
+}
+
+span.template {
+	font-weight: bold;
+}
+
+.full-screen-spinner:after {
+    z-index: 1031;
+    content: '';
+	display: block;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+    background-image: radial-gradient(circle closest-side, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3));
+}
+
+.full-screen-spinner .full-screen-spinner_container {
+    position: absolute;
+    z-index: 1032;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.full-screen-spinner .full-screen-spinner_spinner svg {
+    color: #6f6f6f;
+    height: 8em;
+}
+
+.full-screen-spinner .full-screen-spinner_title {
+    margin-top: 1em;
+    font-size: 2em;
+    padding: 0.5em 0.25em;
+    border-radius: 0.25em;
+    max-width: 70vw;
+    line-height: 1.2;
+}
+
+.full-screen-spinner .full-screen-spinner_spinner svg {
+    animation: fa-spin 1s infinite steps(8);
+}
+
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(1turn)
+    }
+}
+
+.freshdesk-help-icon {
+    height: 1em;
+    width: 1em;
+    vertical-align: text-top;
+    color: #cf2402;
+    cursor: pointer;
+}
+
+h3 .freshdesk-help-icon {
+	height: .75em;
+	width: .75em;
+	vertical-align: baseline;
+}
+
+h4 .freshdesk-help-icon {
+	height: .85em;
+	width: .85em;
+	vertical-align: baseline;
+}

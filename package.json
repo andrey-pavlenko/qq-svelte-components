@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "scripts": {
     "start": "sirv public --port 8080",
-    "build": "npm run build:application-first",
-    "dev": "npm run dev:application-first",
+    "build": "npm run build:general-items-price-change",
+    "dev": "npm run dev:general-items-price-change",
     "validate": "svelte-check",
     "build:application-first": "rimraf public/application-first && rollup -c src/application-first/rollup.config.js",
-    "dev:application-first": "rimraf public/application-first && rollup -w -c src/application-first/rollup.config.js"
+    "dev:application-first": "rimraf public/application-first && rollup -w -c src/application-first/rollup.config.js",
+    "build:general-items-price-change": "rimraf public/general-items-price-change && rollup -c src/general-items-price-change/rollup.config.js",
+    "dev:general-items-price-change": "rimraf public/general-items-price-change && rollup -w -c src/general-items-price-change/rollup.config.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",

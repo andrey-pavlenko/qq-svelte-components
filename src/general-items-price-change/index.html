@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="mask-icon" href="./favicon.svg" color="blue">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+
+  <title>Общее изменение цен</title>
+
+  <!-- Qui-Quo scripts/styles -->
+  <script src="./jquery-1.9.1.min.js" type="text/javascript"></script>
+  <script src="./bootstrap-2.3.1.min.js" type="text/javascript"></script>
+  <link rel='stylesheet' href='./bootstrap-2.3.1.css'>
+  <link href="./qq-common.css" rel="stylesheet" type="text/css">
+
+  <!-- Component script/styles -->
+  <link rel='stylesheet' href='/general-items-price-change/general-items-price-change.css'>
+  <script defer src='./general-items-price-change/general-items-price-change.js'></script>
+
+</head>
+
+<body>
+  <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container"><a class="brand qq-brand" href="/agency"><span>Q</span>ui-<span>Q</span>uo</a>
+        <ul class="nav">
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"
+              style="white-space: nowrap;overflow:hidden;max-width: 220px;">Агентство<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class=" active"><a href="/agency">Личный кабинет</a></li>
+              <li><a href="/agency/office/12841">Логотип и адрес ТА</a></li>
+              <li><a href="/agency/managers">Менеджеры</a></li>
+              <li><a href="/agency/edit/quote-setup">Подборка туров</a></li>
+              <li class="dropdown-submenu"><a class="dropdown-toggle" href="#" tabindex="-1">Шаблон подборки туров</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/agency/edit/quote-templates">Веб страница</a></li>
+                  <li><a href="/agency/edit/email-templates">Email</a></li>
+                  <li><a href="/agency/edit/sms-template">SMS</a></li>
+                  <li><a href="/agency/edit/copy-text-templates">Мессенджер и буфер обмена</a></li>
+                </ul>
+              </li>
+              <li><a href="/agency/tariffs/active">Тарифы</a></li>
+              <li><a href="/agency/billing">Выписка по счету</a></li>
+              <li class="dropdown-submenu"><a class="dropdown-toggle" href="#" tabindex="-1">Дополнительно</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/agency/edit/notifications">Уведомления о балансе</a></li>
+                  <li><a href="/agency/edit/password">Смена пароля</a></li>
+                  <li><a href="/agency/edit/master-psw">Разграничение прав доступа</a></li>
+                  <li><a href="/agency/edit/advert">Рекламный текст</a></li>
+                  <li><a href="/agency/edit/edit-selected-tour">Скидки</a></li>
+                  <li><a href="/agency/edit/hotel-info-link">Ссылка на описание отеля</a></li>
+                  <li><a href="/agency/mail-accounts">Отправка подборок со своего email'а</a></li>
+                  <li><a href="/agency/edit/buy-btn-text">Тексты для кнопки "Купить тур"</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a class="dropdown-toggle" href="#" tabindex="-1">Интеграция</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/agency/edit/sms-account">SMS Шлюз</a></li>
+                  <li><a href="/agency/edit/uon">U-ON.Travel</a></li>
+                  <li><a href="/agency/edit/turyru">Tury.ru</a></li>
+                  <li><a href="/agency/edit/tourcontrol">TourControl</a></li>
+                  <li><a href="/agency/edit/custom-crm">Своя CRM</a></li>
+                  <li><a href="/agency/edit/amocrm">AmoCRM</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Клиенты<b
+                class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/agency/clients?since=today">Сегодня</a></li>
+              <li><a href="/agency/clients?since=yesterday">Вчера</a></li>
+              <li><a href="/agency/clients?since=week">Эта неделя</a></li>
+              <li><a href="/agency/clients?since=month">Этот месяц</a></li>
+              <li><a href="/agency/clients?since=year">Этот год</a></li>
+              <li><a href="/agency/clients?since=all">Все</a></li>
+              <li class="divider"></li>
+              <li><a href="/agency/client/add">Добавить нового</a></li>
+              <li><a href="/agency/send-sms">Отправить SMS</a></li>
+              <li class="divider"></li>
+              <li><a href="/agency/export/clients">Скачать базу</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Подборки<b
+                class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/agency/quotes?since=today">Сегодня</a></li>
+              <li><a href="/agency/quotes?since=yesterday">Вчера</a></li>
+              <li><a href="/agency/quotes?since=week">Эта неделя</a></li>
+              <li><a href="/agency/quotes?since=month">Этот месяц</a></li>
+              <li><a href="/agency/quotes?since=year">Этот год</a></li>
+              <li><a href="/agency/quotes?since=all">Все</a></li>
+              <li class="divider"></li>
+              <li><a href="/agency/quotes?order=quote.last_visit_or_click&amp;since=month&amp;asc=yes">Показать
+                  клики</a></li>
+              <li><a href="/agency/quotes/open">Открыть по номеру</a></li>
+              <li><a href="/agency/quotes/statistics">Статистика</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">ТО и пароли<b
+                class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/agency/bookmarks">Закладки</a></li>
+              <li><a href="/agency/quicklogin-passwords">Пароли к сайтам</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Помощь<b
+                class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/agency/contacts">Связаться с тех. поддержкой</a></li>
+              <li><a href="/agency/tutorial-quote-create">Как это работает?</a></li>
+              <li><a href="/agency/video-tutorials">Видео уроки</a></li>
+              <li><a href="/agency/tutorial-install-extension">Установить на других компьютерах</a></li>
+              <li><a href="https://help.qui-quo.support/support/solutions/folders/35000219453" target="_blank">Тарифы,
+                  оплата, баланс</a></li>
+              <li><a href="/agency/tutorial-update-extension">Как обновить программу?</a></li>
+              <li><a href="/agency/tutorial-reinstall-extension">Как переустановить программу?</a></li>
+              <li><a href="/agency/webinars">Вебинары</a></li>
+              <li><a href="/agency/news">Новости</a></li>
+              <li class="divider"></li>
+              <li><a href="/oferta20140114.pdf" target="_blank">Публичная оферта</a></li>
+              <li><a href="/agency/tariffs/active">Тарифы</a></li>
+              <li class="divider"></li>
+              <li><a href="https://help.qui-quo.support/support/solutions/35000101499" target="_blank">Возможности
+                  программы</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav pull-right">
+          <li><a href="/agency/logout">Выйти</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <main></main>
+    <footer>
+      <div id="social-media"><a href="/vk-group" target="_blank"><img alt="ВКонтакте" src="./vkontakte20.png"></a></div>
+      2012-2020 © Qui-Quo. Все права защищены.
+    </footer>
+  </div>
+</body>
+
+</html>
