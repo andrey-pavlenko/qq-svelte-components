@@ -1,0 +1,42 @@
+.c-items
+  width: 100%
+
+  @mixin mark_price()
+    $border: 1px solid $g-text-info
+    $bg-color: $g-bg-info
+
+    background-color: $bg-color
+    border-left: $border
+    border-right: $border
+
+    &.is-first
+      border-top: $border !important
+    &.is-last
+      border-bottom: $border
+
+  &.by-init
+    .c-item__price--init
+      @include mark_price()
+  &.by-current
+    .c-item__price
+      @include mark_price()
+
+.c-item__price,
+.c-item__price--init,
+.c-item__price--new
+  text-align: center !important
+
+th
+  &.c-item__price,
+  &.c-item__price--init,
+  &.c-item__price--new
+    line-height: 90%
+
+.c-item__title
+  max-width: 200px
+
+.c-title__name,
+.c-title__nights
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis

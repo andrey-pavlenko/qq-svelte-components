@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
+import json from '@rollup/plugin-json';
 
 import { serve } from './serve';
 
@@ -27,7 +28,7 @@ function config(opts) {
       name: opts.name,
       file: opts.jsFile,
       sourcemap: !production,
-      format: 'iife',
+      format: 'iife'
     },
     plugins: [
       svelte({
@@ -35,11 +36,11 @@ function config(opts) {
         preprocess: sveltePreprocess(),
         css: (css) => {
           cssCodes.push(css.code);
-        },
+        }
       }),
       resolve({
         browser: true,
-        dedupe: ['svelte'],
+        dedupe: ['svelte']
       }),
       commonjs(),
       typescript({ sourceMap: !production }),
@@ -49,8 +50,9 @@ function config(opts) {
       postcss({
         extract: true,
         minimize: production,
-        sourceMap: !production,
+        sourceMap: !production
       }),
+      json(),
       (function () {
         return {
           name: 'svelte-css',
@@ -63,14 +65,14 @@ function config(opts) {
                 cssFile.source = [cssFile.source, cssAppend.trim()].join('\n');
               }
             }
-          },
+          }
         };
       })(),
-      ...(opts.plugins || []),
+      ...(opts.plugins || [])
     ],
     watch: {
-      clearScreen: false,
-    },
+      clearScreen: false
+    }
   };
 }
 

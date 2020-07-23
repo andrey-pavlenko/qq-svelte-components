@@ -1,0 +1,102 @@
+[
+  {
+    "pos": 0,
+    "name": "Grand Uysal Family Suite 4*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-07-31T21:00:00.000Z",
+    "initial_price": 124727.0,
+    "price": 124727.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 1,
+    "name": "Lonicera City 3*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-07-31T21:00:00.000Z",
+    "initial_price": 130503.0,
+    "price": 130503.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 2,
+    "name": "Santa Marina Deluxe 4*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-08-02T21:00:00.000Z",
+    "initial_price": 140327.0,
+    "price": 140327.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 3,
+    "name": "Bariscan Hotel 3*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-08-01T21:00:00.000Z",
+    "initial_price": 143486.0,
+    "price": 143486.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 4,
+    "name": "Ponz 3*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-07-31T21:00:00.000Z",
+    "initial_price": 151669.0,
+    "price": 151669.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 5,
+    "name": "Grand Uysal Family Suite 4*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-07-31T21:00:00.000Z",
+    "initial_price": 124727.0,
+    "price": 124727.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 6,
+    "name": "Lonicera City 3*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-07-31T21:00:00.000Z",
+    "initial_price": 130503.0,
+    "price": 130503.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 7,
+    "name": "Santa Marina Deluxe Santa Marina Deluxe 4*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-08-02T21:00:00.000Z",
+    "initial_price": 140,
+    "price": 140327.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 8,
+    "name": "Bariscan Hotel 3*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-08-01T21:00:00.000Z",
+    "initial_price": 143486.0,
+    "price": 143486.0,
+    "currency": "RUB"
+  },
+  {
+    "pos": 9,
+    "name": "Ponz 3*",
+    "nights": 10,
+    "extra_nights": 0,
+    "checkin": "2020-07-31T21:00:00.000Z",
+    "initial_price": 151669.0,
+    "price": 151669.0,
+    "currency": "RUB"
+  }
+]
