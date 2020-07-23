@@ -5,6 +5,7 @@ const app = new Application({
   target: document.body,
   props: {
     name: 'world',
+    surName: 'Test',
   },
 });
 
