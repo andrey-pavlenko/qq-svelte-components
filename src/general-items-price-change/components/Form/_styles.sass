@@ -1,12 +1,63 @@
+@mixin pill-from-radio($pill-selector)
+  $text-active: #ffffff
+  $bg-active: #0088cc
+  $text-hover: #005580
+  $bg-hover: #eeeeee
+
+  #{$pill-selector}
+    padding: 8px 12px
+    margin: 2px 2px 2px 0
+    line-height: 14px
+    display: block
+    border-radius: 5px
+
+    &:hover
+      color: $text-hover
+      background-color: $bg-hover
+
+  input[type=radio]
+    display: none
+
+  input[type=radio]:checked + #{$pill-selector}
+    color: $text-active
+    background-color: $bg-active
+
+  input[type=radio]:not(:checked) + #{$pill-selector}
+    color: $bg-active
+
+.c-action-type
+  label.radio
+    padding: 0
+    margin: 0 !important
+    @include pill-from-radio('.c-action__pill')
+
+.c-form-legend
+  font-size: 16px
+  line-height: 32px
+  margin: 0 0 8px 0
+
+  label
+    font-size: 16px
+    input[type=checkbox]
+      margin-top: 2px
+
+.l-calc-action,
+.l-roundness
+  margin: 10px 0 0 0
+
 .l-input-value
   display: flex
   align-items: start
 
-.l-input-value__number
-  flex-grow: 1
+.l-input-value__number,
+.l-input-value__type
+  flex-grow: 0 0 50%
 
 .l-input-value__type
   margin: 0 0 0 1em
+
+.l-revert
+  margin-bottom: 2em
 
 .l-roundness__params
   display: flex
@@ -24,3 +75,6 @@
 
 .l-decrease__to
   margin: 0 1em 0 0
+
+.l-form__buttons
+  margin: 20px 0 0 0

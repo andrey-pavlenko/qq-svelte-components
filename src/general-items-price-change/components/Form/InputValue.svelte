@@ -15,11 +15,11 @@
     />
   </div>
   <div class="l-input-value__type">
-    <label class="radio">
+    <label class="radio inline">
       <input type="radio" bind:group="{type}" value="percent" />
       В процентах
     </label>
-    <label class="radio">
+    <label class="radio inline">
       <input type="radio" bind:group="{type}" value="amount" />
       В сумме
     </label>

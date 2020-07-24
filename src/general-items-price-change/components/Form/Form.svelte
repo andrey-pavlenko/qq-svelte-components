@@ -1,25 +1,29 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import sourcePrice from '../../stores/source-price';
-  import calcAction from '../../stores/calc-action';
   import InputValue from './InputValue.svelte';
 
   const discounts: Discounts = getContext('discounts');
+
+  let actionType: string = 'discount';
   let prefefinedDiscountId: number | undefined;
   let discountValue: CalcValue['value'];
   let discountType: CalcValue['type'];
   let markupValue: CalcValue['value'];
   let markupType: CalcValue['type'];
-  let doRoundness: boolean = true;
+  let doRoundness: boolean = false;
   let roundTo: number = 100;
   let roundType: string = 'math';
   let decreaseTo: number;
 
-  function onCalcActionClick(event: Event): void {
-    const action = (event.target as HTMLElement).dataset.value;
-    if (action != null) {
-      $calcAction = action;
+  function onSourcePriceChange(value: string): void {
+    if (value === 'price' && actionType === 'revert') {
+      actionType = 'discount';
     }
+  }
+
+  function onActionTypeChange(value: string): void {
+    console.info('onActionTypeChange', value);
   }
 
   function onPredefinedDiscountChange(discountId: number | undefined): void {
@@ -53,6 +57,8 @@
     console.info('onSubmit');
   }
 
+  $: onSourcePriceChange($sourcePrice);
+  $: onActionTypeChange(actionType);
   $: onPredefinedDiscountChange(prefefinedDiscountId);
   $: onDiscountChange(discountValue, discountType);
   $: onMarkupChange(markupValue, markupType);
@@ -75,41 +81,24 @@
 
   <div class="l-calc-action">
     <legend class="c-form-legend">Действие</legend>
-    <ul class="nav nav-pills">
-      <li class:active="{$calcAction === 'discount'}">
-        <a
-          on:click|preventDefault="{onCalcActionClick}"
-          role="button"
-          href="#calc-action"
-          data-value="discount"
-        >
-          Скидка
-        </a>
-      </li>
-      <li class:active="{$calcAction === 'markup'}">
-        <a
-          on:click="{onCalcActionClick}"
-          role="button"
-          href="#calc-action"
-          data-value="markup"
-        >
-          Наценка
-        </a>
-      </li>
+    <div class="c-action-type">
+      <label class="radio inline">
+        <input type="radio" bind:group="{actionType}" value="discount" />
+        <span class="c-action__pill">Скидка</span>
+      </label>
+      <label class="radio inline">
+        <input type="radio" bind:group="{actionType}" value="markup" />
+        <span class="c-action__pill">Наценка</span>
+      </label>
       {#if $sourcePrice === 'initial_price'}
-        <li class:active="{$calcAction === 'revert'}">
-          <a
-            on:click="{onCalcActionClick}"
-            role="button"
-            href="#calc-action"
-            data-value="revert"
-          >
-            Отмена
-          </a>
-        </li>
+        <label class="radio inline">
+          <input type="radio" bind:group="{actionType}" value="revert" />
+          <span class="c-action__pill">Отмена</span>
+        </label>
       {/if}
-    </ul>
-    {#if $calcAction === 'discount'}
+    </div>
+
+    {#if actionType === 'discount'}
       <div class="l-discount">
         <p class="text-warning">
           {$sourcePrice === 'initial_price' ? 'Исходные' : 'Текущие'} цены всех
@@ -140,7 +129,7 @@
         <label>Значение скидки</label>
         <InputValue bind:value="{discountValue}" bind:type="{discountType}" />
       </div>
-    {:else if $calcAction === 'markup'}
+    {:else if actionType === 'markup'}
       <div class="l-markup">
         <p class="text-warning">
           {$sourcePrice === 'initial_price' ? 'Исходные' : 'Текущие'} цены всех
@@ -161,7 +150,6 @@
           Текущая цена всех туров будет заменена на исходную цену.
           <strong>Все скидки и наценки будут отменены.</strong>
         </p>
-        <p>Предупреждение</p>
       </div>
     {/if}
 
@@ -236,7 +224,8 @@
     </div>
   {/if}
 
-  <input class="btn btn-primary" type="submit" value="Изменить цены" />
-  <a href="goto-back" class="btn">Назад</a>
-
+  <div class="l-form__buttons">
+    <input class="btn btn-primary" type="submit" value="Изменить цены" />
+    <a href="goto-back" class="btn">Назад</a>
+  </div>
 </form>
