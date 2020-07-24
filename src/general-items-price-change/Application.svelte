@@ -1,8 +1,18 @@
 <script lang="ts">
+  import { setContext } from 'svelte';
   import ItemsList from './components/Items/List.svelte';
-  import Form from './components/Form.svelte';
+  import Form from './components/Form/Form.svelte';
+  import itemsStore from './stores/items';
 
   export let items: ItemSource[] = [];
+  export let discounts: Discount[] = [];
+
+  itemsStore.set(items.map((item) => ({ ...item, ...{ checked: true } })));
+
+  setContext(
+    'discounts',
+    new Map(discounts.map((discount) => [discount.id, discount])) as Discounts
+  );
 </script>
 
 <div class="row">

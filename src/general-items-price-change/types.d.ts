@@ -12,3 +12,17 @@ interface ItemSource {
 interface ItemCheckable extends ItemSource {
   checked: boolean;
 }
+
+interface Discount {
+  id: number;
+  name: string;
+  percentage?: number | null;
+  value?: number | null;
+}
+
+type Discounts = Map<number, Discount>;
+
+interface CalcValue {
+  value: number;
+  type: 'percent' | 'amount';
+}

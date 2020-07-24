@@ -1,13 +1,15 @@
 import './index.sass';
 import Application from './Application.svelte';
 
-import * as itemsJson from './items.json';
+const target = document.querySelector('main');
+const items = JSON.parse(target.dataset.items || '[]');
+const discounts = JSON.parse(target.dataset.discounts || '[]');
 
 const app = new Application({
-  target: document.querySelector('main'),
+  target,
   props: {
-    // @ts-ignore
-    items: itemsJson.default
+    items,
+    discounts
   }
 });
 
