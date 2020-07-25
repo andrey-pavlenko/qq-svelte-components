@@ -9,8 +9,9 @@ interface ItemSource {
   currency: string;
 }
 
-interface ItemCheckable extends ItemSource {
+interface Item extends ItemSource {
   checked: boolean;
+  new_price?: number;
 }
 
 interface Discount {
@@ -25,4 +26,17 @@ type Discounts = Map<number, Discount>;
 interface CalcValue {
   value: number;
   type: 'percent' | 'amount';
+}
+
+type RoundMethod = 'math' | 'ceil' | 'floor';
+
+interface CalcParams {
+  sourcePrice: string;
+  actionType: 'discount' | 'markup' | 'revert';
+  calcValue?: CalcValue;
+  round?: {
+    to: number;
+    method: RoundMethod;
+  };
+  decrease?: number;
 }

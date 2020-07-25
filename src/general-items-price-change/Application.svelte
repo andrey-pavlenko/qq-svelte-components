@@ -29,9 +29,7 @@
         <Form />
       </div>
       <div class="l-items">
-        <ItemsList
-          items="{items.map((item) => ({ ...item, ...{ checked: true } }))}"
-        />
+        <ItemsList />
       </div>
     </div>
   </div>

@@ -1,68 +1,157 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import sourcePrice from '../../stores/source-price';
   import InputValue from './InputValue.svelte';
 
   const discounts: Discounts = getContext('discounts');
 
-  let actionType: string = 'discount';
-  let prefefinedDiscountId: number | undefined;
-  let discountValue: CalcValue['value'];
-  let discountType: CalcValue['type'];
-  let markupValue: CalcValue['value'];
-  let markupType: CalcValue['type'];
-  let doRoundness: boolean = false;
-  let roundTo: number = 100;
-  let roundType: string = 'math';
-  let decreaseTo: number;
+  let mounted: boolean = false;
+  onMount(() => (mounted = true));
+
+  // Source price ===============================
 
   function onSourcePriceChange(value: string): void {
     if (value === 'price' && actionType === 'revert') {
       actionType = 'discount';
     }
+    onCalcParamsChange();
   }
 
+  $: onSourcePriceChange($sourcePrice);
+
+  // Action type ================================
+
+  let actionType: string = 'discount';
+
   function onActionTypeChange(value: string): void {
-    console.info('onActionTypeChange', value);
+    onCalcParamsChange();
   }
+
+  $: onActionTypeChange(actionType);
+
+  // Discount ===================================
+
+  let prefefinedDiscountId: number | undefined;
+  let inputDiscountValue: CalcValue['value'];
+  let inputDiscountType: CalcValue['type'];
+  let discountValue: CalcValue['value'];
+  let discountType: CalcValue['type'];
 
   function onPredefinedDiscountChange(discountId: number | undefined): void {
     if (discountId != null) {
-      discountValue = undefined;
+      const discount = discounts.get(discountId);
+      if (discount != null) {
+        if (discount.percentage != null) {
+          discountValue = discount.percentage;
+          discountType = 'percent';
+          inputDiscountValue = undefined;
+        } else if (discount.value != null) {
+          discountValue = discount.value;
+          discountType = 'amount';
+          inputDiscountValue = undefined;
+        }
+      }
     }
+    onCalcParamsChange();
   }
 
   function onDiscountChange(
     value: CalcValue['value'],
     type: CalcValue['type']
   ): void {
-    console.info('onDiscountChange', value, type);
     if (Number.isFinite(value)) {
       prefefinedDiscountId = undefined;
     }
+    onCalcParamsChange();
   }
+
+  $: onPredefinedDiscountChange(prefefinedDiscountId);
+  $: onDiscountChange(inputDiscountValue, inputDiscountType);
+
+  // Markup =====================================
+
+  let markupValue: CalcValue['value'];
+  let markupType: CalcValue['type'];
 
   function onMarkupChange(
     value: CalcValue['value'],
     type: CalcValue['type']
   ): void {
-    console.info('onMarkupChange', value, type);
+    onCalcParamsChange();
   }
 
+  $: onMarkupChange(markupValue, markupType);
+
+  // Roundness ==================================
+
+  let doRoundness: boolean = false;
+  let roundTo: number = 100;
+  let roundMethod: string = 'math';
+
+  $: onRoudnessChange(doRoundness, roundTo, roundMethod);
   function onRoudnessChange(enabled: boolean, to: number, type: string): void {
-    console.info('onRoudnessChange', enabled, to, type);
+    onCalcParamsChange();
   }
+
+  // Decreasment ================================
+
+  let decreaseTo: number;
+
+  function onDecreaseChange(value: number): void {
+    onCalcParamsChange();
+  }
+
+  $: onDecreaseChange(decreaseTo);
+
+  // Recalculate prices =========================
+
+  function onCalcParamsChange(): void {
+    if (!mounted) {
+      return;
+    }
+    const calcParams: CalcParams = {
+      sourcePrice: $sourcePrice,
+      actionType: actionType as CalcParams['actionType']
+    };
+
+    switch (actionType) {
+      case 'discount':
+        if (Number.isFinite(discountValue) && discountValue > 0) {
+          calcParams.calcValue = {
+            value: discountValue,
+            type: discountType
+          };
+        }
+        break;
+      case 'markup':
+        if (Number.isFinite(markupValue) && markupValue > 0) {
+          calcParams.calcValue = {
+            value: markupValue,
+            type: markupType
+          };
+        }
+        break;
+    }
+
+    if (doRoundness) {
+      calcParams.round = {
+        to: roundTo,
+        method: roundMethod as RoundMethod
+      };
+
+      if (Number.isFinite(decreaseTo)) {
+        calcParams.decrease = decreaseTo;
+      }
+    }
+
+    console.info('onCalcParamsChange', calcParams);
+  }
+
+  // Form submit ================================
 
   function onSubmit(): void {
     console.info('onSubmit');
   }
-
-  $: onSourcePriceChange($sourcePrice);
-  $: onActionTypeChange(actionType);
-  $: onPredefinedDiscountChange(prefefinedDiscountId);
-  $: onDiscountChange(discountValue, discountType);
-  $: onMarkupChange(markupValue, markupType);
-  $: onRoudnessChange(doRoundness, roundTo, roundType);
 </script>
 
 <form on:submit|preventDefault="{onSubmit}">
@@ -127,7 +216,10 @@
           </select>
         {/if}
         <label>Значение скидки</label>
-        <InputValue bind:value="{discountValue}" bind:type="{discountType}" />
+        <InputValue
+          bind:value="{inputDiscountValue}"
+          bind:type="{inputDiscountType}"
+        />
       </div>
     {:else if actionType === 'markup'}
       <div class="l-markup">
@@ -181,15 +273,15 @@
         </div>
         <div class="l-round__type">
           <label class="radio">
-            <input type="radio" bind:group="{roundType}" value="math" />
+            <input type="radio" bind:group="{roundMethod}" value="math" />
             Математически
           </label>
           <label class="radio">
-            <input type="radio" bind:group="{roundType}" value="ceil" />
+            <input type="radio" bind:group="{roundMethod}" value="ceil" />
             В большую сторону
           </label>
           <label class="radio">
-            <input type="radio" bind:group="{roundType}" value="floor" />
+            <input type="radio" bind:group="{roundMethod}" value="floor" />
             В меньшую сторону
           </label>
         </div>

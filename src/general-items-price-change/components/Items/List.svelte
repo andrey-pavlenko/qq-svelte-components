@@ -1,8 +1,14 @@
 <script lang="ts">
   import sourcePrice from '../../stores/source-price';
+  import items from '../../stores/items';
+
   import ItemView from './Item.svelte';
 
-  export let items: ItemCheckable[] = [];
+  function onItemCheck({ detail }: CustomEvent): void {
+    console.info('onItemCheck', detail);
+  }
+
+  // export let items: Item[] = [];
 
   // console.info(items);
   // console.info($sourcePrice);
@@ -44,8 +50,12 @@
     </tr>
   </thead>
   <tbody>
-    {#each items as item, index (item.pos)}
-      <ItemView {...item} isLast="{index === items.length - 1}" />
+    {#each $items as item, index (item.pos)}
+      <ItemView
+        {...item}
+        isLast="{index === $items.length - 1}"
+        on:item:check="{onItemCheck}"
+      />
     {/each}
 
   </tbody>

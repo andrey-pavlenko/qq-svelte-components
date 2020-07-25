@@ -10,7 +10,7 @@
       type="number"
       step="any"
       min="0"
-      placeholder="Введите числовое значение"
+      placeholder="Положительное число"
       bind:value
     />
   </div>
