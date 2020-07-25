@@ -1,17 +1,46 @@
 <script lang="ts">
+  import ItemView from './Item.svelte';
+  import TristateCheckbox from './TristateCheckbox.svelte';
+
   import sourcePrice from '../../stores/source-price';
   import items from '../../stores/items';
 
-  import ItemView from './Item.svelte';
+  // All items ==================================
 
-  function onItemCheck({ detail }: CustomEvent): void {
-    console.info('onItemCheck', detail);
+  let checked: boolean;
+  let indeterminate: boolean;
+
+  function updateCheckstate(): void {
+    indeterminate = !items.isAllCheckedSimilar();
+    if (!indeterminate) {
+      checked = $items[0].checked;
+    }
   }
 
-  // export let items: Item[] = [];
+  updateCheckstate();
+  items.subscribe(updateCheckstate);
 
-  // console.info(items);
-  // console.info($sourcePrice);
+  function changeAllCheckState(checked: boolean): void {
+    items.setChecked(checked);
+  }
+
+  $: changeAllCheckState(checked);
+
+  // One item ===================================
+
+  function onItemCheck({ detail }: CustomEvent): void {
+    const { checked, pos } = detail;
+
+    items.update((items) =>
+      items.map((item) => {
+        if (item.pos === pos) {
+          return { ...item, ...{ checked } };
+        } else {
+          return item;
+        }
+      })
+    );
+  }
 </script>
 
 <table
@@ -22,7 +51,7 @@
   <thead>
     <tr>
       <th class="c-item__check">
-        <input type="checkbox" />
+        <TristateCheckbox bind:checked bind:indeterminate />
       </th>
       <th class="c-item__title">Тур</th>
       <th class="c-item__price--init is-first">
