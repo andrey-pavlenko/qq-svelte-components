@@ -6,12 +6,10 @@
     checkbox: HTMLInputElement,
     indeterminateState: boolean
   ) {
-    console.info(checkbox);
     checkbox.indeterminate = indeterminateState;
 
     return {
       update(indeterminateState: boolean): void {
-        console.info(checkbox);
         checkbox.indeterminate = indeterminateState;
       }
     };

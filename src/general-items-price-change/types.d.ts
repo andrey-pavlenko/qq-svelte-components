@@ -1,18 +1,18 @@
 interface ItemSource {
-  pos: number;
-  name: string;
-  nights: number;
-  extra_nights: number;
-  checkin: string;
-  initial_price: number;
-  price: number;
-  currency: string;
+  readonly pos: number;
+  readonly name: string;
+  readonly nights: number;
+  readonly extra_nights: number;
+  readonly checkin: string;
+  readonly initial_price: number;
+  readonly price: number;
+  readonly currency: string;
 }
 
-interface Item extends ItemSource {
-  checked: boolean;
-  new_price?: number;
-}
+// interface ItemResult extends ItemSource {
+//   checked: boolean;
+//   new_price: number;
+// }
 
 interface Discount {
   id: number;
@@ -28,15 +28,19 @@ interface CalcValue {
   type: 'percent' | 'amount';
 }
 
-type RoundMethod = 'math' | 'ceil' | 'floor';
+type RoundMethods = 'round' | 'ceil' | 'floor';
+
+type PriceKeys = 'initial_price' | 'price';
+
+type ActionVariants = 'discount' | 'markup' | 'revert';
 
 interface CalcParams {
-  sourcePrice: string;
-  actionType: 'discount' | 'markup' | 'revert';
+  priceKey: PriceKeys;
+  action: ActionVariants;
   calcValue?: CalcValue;
   round?: {
     to: number;
-    method: RoundMethod;
+    method: RoundMethods;
   };
   decrease?: number;
 }

@@ -1,5 +1,7 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
+
+  // TODO: вместо sourcePrice использовать priceKey
   import sourcePrice from '../../stores/source-price';
   import InputValue from './InputValue.svelte';
 

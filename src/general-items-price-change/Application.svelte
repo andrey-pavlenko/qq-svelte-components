@@ -9,6 +9,7 @@
 
   itemsStore.set(items.map((item) => ({ ...item, ...{ checked: true } })));
 
+  // TODO: Передать скидки параметром в Form
   setContext(
     'discounts',
     new Map(discounts.map((discount) => [discount.id, discount])) as Discounts

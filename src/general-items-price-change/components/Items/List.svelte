@@ -2,6 +2,9 @@
   import ItemView from './Item.svelte';
   import TristateCheckbox from './TristateCheckbox.svelte';
 
+  import priceKey from '../../stores/price-key';
+
+  // TODO: вместо sourcePrice использовать priceKey
   import sourcePrice from '../../stores/source-price';
   import items from '../../stores/items';
 
@@ -20,11 +23,11 @@
   updateCheckstate();
   items.subscribe(updateCheckstate);
 
-  function changeAllCheckState(checked: boolean): void {
+  function changeAllCheckstate(checked: boolean): void {
     items.setChecked(checked);
   }
 
-  $: changeAllCheckState(checked);
+  $: changeAllCheckstate(checked);
 
   // One item ===================================
 
@@ -45,8 +48,8 @@
 
 <table
   class="c-items table table-striped"
-  class:by-init="{$sourcePrice === 'initial_price'}"
-  class:by-current="{$sourcePrice === 'price'}"
+  class:by-init="{$priceKey === 'initial_price'}"
+  class:by-current="{$priceKey === 'price'}"
 >
   <thead>
     <tr>
