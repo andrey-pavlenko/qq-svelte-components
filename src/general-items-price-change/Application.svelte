@@ -1,15 +1,11 @@
 <script lang="ts">
   import { setContext } from 'svelte';
-  import ItemsList from './components/Items/List.svelte';
   import Form from './components/Form/Form.svelte';
-  import itemsStore from './stores/items';
 
-  export let items: ItemSource[] = [];
   export let discounts: Discount[] = [];
+  export let backUrl: string;
+  export let submitUrl: string;
 
-  itemsStore.set(items.map((item) => ({ ...item, ...{ checked: true } })));
-
-  // TODO: Передать скидки параметром в Form
   setContext(
     'discounts',
     new Map(discounts.map((discount) => [discount.id, discount])) as Discounts
@@ -27,10 +23,10 @@
     <div class="l-errors"></div>
     <div class="l-application">
       <div class="l-form">
-        <Form />
+        <Form backUrl="{backUrl}" submitUrl="{submitUrl}" />
       </div>
       <div class="l-items">
-        <ItemsList />
+        <div>ItemsList</div>
       </div>
     </div>
   </div>

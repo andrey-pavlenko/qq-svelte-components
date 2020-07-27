@@ -35,8 +35,8 @@ type PriceKeys = 'initial_price' | 'price';
 type ActionVariants = 'discount' | 'markup' | 'revert';
 
 interface CalcParams {
-  priceKey: PriceKeys;
   action: ActionVariants;
+  priceKey: PriceKeys;
   calcValue?: CalcValue;
   round?: {
     to: number;

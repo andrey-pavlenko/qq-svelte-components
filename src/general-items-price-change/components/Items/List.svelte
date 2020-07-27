@@ -1,52 +1,52 @@
 <script lang="ts">
-  import ItemView from './Item.svelte';
-  import TristateCheckbox from './TristateCheckbox.svelte';
+  // import ItemView from './Item.svelte';
+  // import TristateCheckbox from './TristateCheckbox.svelte';
 
-  import priceKey from '../../stores/price-key';
+  // import priceKey from '../../stores/price-key';
 
   // TODO: вместо sourcePrice использовать priceKey
-  import sourcePrice from '../../stores/source-price';
-  import items from '../../stores/items';
+  // import sourcePrice from '../../stores/source-price';
+  // import items from '../../stores/items';
 
   // All items ==================================
 
-  let checked: boolean;
-  let indeterminate: boolean;
+  // let checked: boolean;
+  // let indeterminate: boolean;
 
-  function updateCheckstate(): void {
-    indeterminate = !items.isAllCheckedSimilar();
-    if (!indeterminate) {
-      checked = $items[0].checked;
-    }
-  }
+  // function updateCheckstate(): void {
+  //   indeterminate = !items.isAllCheckedSimilar();
+  //   if (!indeterminate) {
+  //     checked = $items[0].checked;
+  //   }
+  // }
 
-  updateCheckstate();
-  items.subscribe(updateCheckstate);
+  // updateCheckstate();
+  // items.subscribe(updateCheckstate);
 
-  function changeAllCheckstate(checked: boolean): void {
-    items.setChecked(checked);
-  }
+  // function changeAllCheckstate(checked: boolean): void {
+  //   items.setChecked(checked);
+  // }
 
-  $: changeAllCheckstate(checked);
+  // $: changeAllCheckstate(checked);
 
-  // One item ===================================
+  // // One item ===================================
 
-  function onItemCheck({ detail }: CustomEvent): void {
-    const { checked, pos } = detail;
+  // function onItemCheck({ detail }: CustomEvent): void {
+  //   const { checked, pos } = detail;
 
-    items.update((items) =>
-      items.map((item) => {
-        if (item.pos === pos) {
-          return { ...item, ...{ checked } };
-        } else {
-          return item;
-        }
-      })
-    );
-  }
+  //   items.update((items) =>
+  //     items.map((item) => {
+  //       if (item.pos === pos) {
+  //         return { ...item, ...{ checked } };
+  //       } else {
+  //         return item;
+  //       }
+  //     })
+  //   );
+  // }
 </script>
 
-<table
+<!-- <table
   class="c-items table table-striped"
   class:by-init="{$priceKey === 'initial_price'}"
   class:by-current="{$priceKey === 'price'}"
@@ -91,4 +91,6 @@
     {/each}
 
   </tbody>
-</table>
+</table> -->
+
+<div>List</div>

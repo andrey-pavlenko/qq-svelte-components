@@ -1,325 +1,40 @@
 <script lang="ts">
-  import { getContext, onMount } from 'svelte';
+  import { tick } from 'svelte';
+  import calcParamsStore from '../../stores/calc-params';
 
-  // TODO: вместо sourcePrice использовать priceKey
-  import sourcePrice from '../../stores/source-price';
-  import InputValue from './InputValue.svelte';
+  import Pills from './Pills.svelte';
+  import Discount from './Discount.svelte';
+  import Markup from './Markup.svelte';
+  import Revert from './Revert.svelte';
+  import Roundness from './Roundness.svelte';
 
-  const discounts: Discounts = getContext('discounts');
+  export let backUrl: string;
+  export let submitUrl: string;
 
-  let mounted: boolean = false;
-  onMount(() => (mounted = true));
-
-  // Source price ===============================
-
-  function onSourcePriceChange(value: string): void {
-    if (value === 'price' && actionType === 'revert') {
-      actionType = 'discount';
-    }
-    onCalcParamsChange();
+  async function onCalcParamsChange(): Promise<void> {
+    await tick();
+    console.info('calcParamsStore', JSON.stringify($calcParamsStore, null, 2));
   }
 
-  $: onSourcePriceChange($sourcePrice);
-
-  // Action type ================================
-
-  let actionType: string = 'discount';
-
-  function onActionTypeChange(value: string): void {
-    onCalcParamsChange();
-  }
-
-  $: onActionTypeChange(actionType);
-
-  // Discount ===================================
-
-  let prefefinedDiscountId: number | undefined;
-  let inputDiscountValue: CalcValue['value'];
-  let inputDiscountType: CalcValue['type'];
-  let discountValue: CalcValue['value'];
-  let discountType: CalcValue['type'];
-
-  function onPredefinedDiscountChange(discountId: number | undefined): void {
-    if (discountId != null) {
-      const discount = discounts.get(discountId);
-      if (discount != null) {
-        if (discount.percentage != null) {
-          discountValue = discount.percentage;
-          discountType = 'percent';
-          inputDiscountValue = undefined;
-        } else if (discount.value != null) {
-          discountValue = discount.value;
-          discountType = 'amount';
-          inputDiscountValue = undefined;
-        }
-      }
-    }
-    onCalcParamsChange();
-  }
-
-  function onDiscountChange(
-    value: CalcValue['value'],
-    type: CalcValue['type']
-  ): void {
-    if (Number.isFinite(value)) {
-      prefefinedDiscountId = undefined;
-    }
-    onCalcParamsChange();
-  }
-
-  $: onPredefinedDiscountChange(prefefinedDiscountId);
-  $: onDiscountChange(inputDiscountValue, inputDiscountType);
-
-  // Markup =====================================
-
-  let markupValue: CalcValue['value'];
-  let markupType: CalcValue['type'];
-
-  function onMarkupChange(
-    value: CalcValue['value'],
-    type: CalcValue['type']
-  ): void {
-    onCalcParamsChange();
-  }
-
-  $: onMarkupChange(markupValue, markupType);
-
-  // Roundness ==================================
-
-  let doRoundness: boolean = false;
-  let roundTo: number = 100;
-  let roundMethod: string = 'math';
-
-  $: onRoudnessChange(doRoundness, roundTo, roundMethod);
-  function onRoudnessChange(enabled: boolean, to: number, type: string): void {
-    onCalcParamsChange();
-  }
-
-  // Decreasment ================================
-
-  let decreaseTo: number;
-
-  function onDecreaseChange(value: number): void {
-    onCalcParamsChange();
-  }
-
-  $: onDecreaseChange(decreaseTo);
-
-  // Recalculate prices =========================
-
-  function onCalcParamsChange(): void {
-    if (!mounted) {
-      return;
-    }
-    const calcParams: CalcParams = {
-      sourcePrice: $sourcePrice,
-      actionType: actionType as CalcParams['actionType']
-    };
-
-    switch (actionType) {
-      case 'discount':
-        if (Number.isFinite(discountValue) && discountValue > 0) {
-          calcParams.calcValue = {
-            value: discountValue,
-            type: discountType
-          };
-        }
-        break;
-      case 'markup':
-        if (Number.isFinite(markupValue) && markupValue > 0) {
-          calcParams.calcValue = {
-            value: markupValue,
-            type: markupType
-          };
-        }
-        break;
-    }
-
-    if (doRoundness) {
-      calcParams.round = {
-        to: roundTo,
-        method: roundMethod as RoundMethod
-      };
-
-      if (Number.isFinite(decreaseTo)) {
-        calcParams.decrease = decreaseTo;
-      }
-    }
-
-    console.info('onCalcParamsChange', calcParams);
-  }
-
-  // Form submit ================================
+  calcParamsStore.subscribe(onCalcParamsChange);
 
   function onSubmit(): void {
-    console.info('onSubmit');
+    console.info('onSubmit', submitUrl);
   }
 </script>
 
 <form on:submit|preventDefault="{onSubmit}">
-  <div class="l-source-price">
-    <legend class="c-form-legend">Цена, участвуюшая в расчетах</legend>
-    <label class="radio inline">
-      <input type="radio" bind:group="{$sourcePrice}" value="price" />
-      Текущая цена
-    </label>
-    <label class="radio inline">
-      <input type="radio" bind:group="{$sourcePrice}" value="initial_price" />
-      Исходная цена
-      <small class="text-warning">с сайта туроператора</small>
-    </label>
-  </div>
-
-  <div class="l-calc-action">
-    <legend class="c-form-legend">Действие</legend>
-    <div class="c-action-type">
-      <label class="radio inline">
-        <input type="radio" bind:group="{actionType}" value="discount" />
-        <span class="c-action__pill">Скидка</span>
-      </label>
-      <label class="radio inline">
-        <input type="radio" bind:group="{actionType}" value="markup" />
-        <span class="c-action__pill">Наценка</span>
-      </label>
-      {#if $sourcePrice === 'initial_price'}
-        <label class="radio inline">
-          <input type="radio" bind:group="{actionType}" value="revert" />
-          <span class="c-action__pill">Отмена</span>
-        </label>
-      {/if}
-    </div>
-
-    {#if actionType === 'discount'}
-      <div class="l-discount">
-        <p class="text-warning">
-          {$sourcePrice === 'initial_price' ? 'Исходные' : 'Текущие'} цены всех
-          туров будут уменьшены на указанный процент или сумму в соответствии с
-          выбранной скидкой или введенным значением.
-          {#if $sourcePrice === 'price'}
-            <strong>
-              &#x20Уже существующие скидки буду суммированы с новой скидкой.
-            </strong>
-          {/if}
-        </p>
-        {#if discounts.size > 0}
-          <label>Предопределенная скидка</label>
-          <select class="input-block-level" bind:value="{prefefinedDiscountId}">
-            <option
-              value="{undefined}"
-              selected="{prefefinedDiscountId == null}"
-              disabled
-              hidden
-            >
-              Скидка не выбрана
-            </option>
-            {#each Array.from(discounts.entries()) as discount (discount[0])}
-              <option value="{discount[0]}">{discount[1].name}</option>
-            {/each}
-          </select>
-        {/if}
-        <label>Значение скидки</label>
-        <InputValue
-          bind:value="{inputDiscountValue}"
-          bind:type="{inputDiscountType}"
-        />
-      </div>
-    {:else if actionType === 'markup'}
-      <div class="l-markup">
-        <p class="text-warning">
-          {$sourcePrice === 'initial_price' ? 'Исходные' : 'Текущие'} цены всех
-          туров будут умеличены на указанный процент или сумму в соответствии
-          введенным значением.
-          {#if $sourcePrice === 'price'}
-            <strong>
-              &#x20Уже существующие наценки буду суммированы с новой наценкой.
-            </strong>
-          {/if}
-        </p>
-        <label>Значение наценки</label>
-        <InputValue bind:value="{markupValue}" bind:type="{markupType}" />
-      </div>
-    {:else}
-      <div class="l-revert">
-        <p class="text-warning">
-          Текущая цена всех туров будет заменена на исходную цену.
-          <strong>Все скидки и наценки будут отменены.</strong>
-        </p>
-      </div>
-    {/if}
-
-  </div>
-
-  <div class="l-roundness">
-    <legend class="c-form-legend">
-      <label class="checkbox">
-        <input type="checkbox" bind:checked="{doRoundness}" />
-        Округление
-      </label>
-    </legend>
-    {#if doRoundness}
-      <p class="text-warning">Округлить результат вычислений.</p>
-      <div class="l-roundness__params">
-        <div class="l-round__to">
-          <label class="radio">
-            <input type="radio" bind:group="{roundTo}" value="{10}" />
-            До десятков
-          </label>
-          <label class="radio">
-            <input type="radio" bind:group="{roundTo}" value="{100}" />
-            До сотен
-          </label>
-          <label class="radio">
-            <input type="radio" bind:group="{roundTo}" value="{1000}" />
-            До тысяч
-          </label>
-        </div>
-        <div class="l-round__type">
-          <label class="radio">
-            <input type="radio" bind:group="{roundMethod}" value="math" />
-            Математически
-          </label>
-          <label class="radio">
-            <input type="radio" bind:group="{roundMethod}" value="ceil" />
-            В большую сторону
-          </label>
-          <label class="radio">
-            <input type="radio" bind:group="{roundMethod}" value="floor" />
-            В меньшую сторону
-          </label>
-        </div>
-
-      </div>
-    {/if}
-  </div>
-
-  {#if doRoundness}
-    <div class="l-decrease">
-      <div class="l-decrease__to">
-        <label>После округления уменьшить результат на</label>
-        <input
-          class="input-block-level"
-          type="number"
-          min="0"
-          step="1"
-          bind:value="{decreaseTo}"
-          placeholder="Число"
-        />
-      </div>
-      <p class="l-decrease__example text-warning">
-        Чтобы получить, например, такую цену:
-        <strong>10&nbsp;000&nbsp;</strong>
-        &rarr;&nbsp;
-        <strong>9&nbsp;999</strong>
-        или
-        <strong>10&nbsp;000&nbsp;</strong>
-        &rarr;
-        <strong>&nbsp;9&nbsp;990</strong>
-      </p>
-    </div>
-  {/if}
-
+  <Pills
+    labels="{['Скидка', 'Наценка', 'Отмена']}"
+    values="{['discount', 'markup', 'revert']}"
+    bind:value="{$calcParamsStore.action}"
+  />
+  <Discount />
+  <Markup />
+  <Revert />
+  <Roundness />
   <div class="l-form__buttons">
     <input class="btn btn-primary" type="submit" value="Изменить цены" />
-    <a href="goto-back" class="btn">Назад</a>
+    <a href="{backUrl}" class="btn">Назад</a>
   </div>
 </form>

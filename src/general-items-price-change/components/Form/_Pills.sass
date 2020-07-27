@@ -1,0 +1,30 @@
+.c-pills
+  $text-active: #ffffff
+  $bg-active: #0088cc
+  $text-hover: #005580
+  $bg-hover: #eeeeee
+
+  .c-pill__label
+    padding: 0
+    margin: 0 !important
+
+  .c-pill__body
+    padding: 8px 12px
+    margin: 2px 2px 2px 0
+    line-height: 14px
+    display: block
+    border-radius: 5px
+
+    &:hover
+      color: $text-hover
+      background-color: $bg-hover
+
+  input[type=radio]
+    display: none
+
+  input[type=radio]:checked + .c-pill__body
+    color: $text-active
+    background-color: $bg-active
+
+  input[type=radio]:not(:checked) + .c-pill__body
+    color: $bg-active
