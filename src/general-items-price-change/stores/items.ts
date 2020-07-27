@@ -1,48 +1,30 @@
-// import { writable, get } from 'svelte/store';
+import { writable, get } from 'svelte/store';
+import type Item from '../Item';
 
-// // const checkable = writable([] as ItemCheckable[]);
+function isIndeterminateChecksate(items: Item[]): boolean {
+  if (items.length > 1) {
+    const checked = items[0].checked;
+    return items.every((item) => item.checked === checked);
+  }
+  return true;
+}
 
-// const checkable = (function (items: ItemSource[]) {
-//   function itemsToCheckable(items: ItemSource[]): ItemCheckable[] {
-//     return items.map((item) => ({ ...item, ...{ checked: true } }));
-//   }
+const store = (function () {
+  const { subscribe, set, update } = writable([] as Item[]);
 
-//   const { subscribe, set, update } = writable(itemsToCheckable(items));
+  return {
+    subscribe,
+    set,
+    update,
+    isIndeterminateChecksate: () => isIndeterminateChecksate(get(store)),
+    setAllCheckstate: (checked: boolean) =>
+      update((items) =>
+        items.map((item) => {
+          item.checked = checked;
+          return item;
+        })
+      )
+  };
+})();
 
-//   return {
-//     subscribe,
-//     set,
-//     update,
-//     setSourceItems: (items: ItemSource[]) => {
-//       set(itemsToCheckable(items));
-//     }
-//   };
-// })([] as ItemSource[]);
-
-// function createStore(items: Item[] = []) {
-//   const { subscribe, set, update } = writable(items);
-
-//   function setChecked(items: Item[], checked: boolean): Item[] {
-//     return items.map((item) => ({ ...item, ...{ checked } }));
-//   }
-
-//   function isAllCheckedSimilar(items: Item[]): boolean {
-//     if (items.length > 1) {
-//       const checked = items[0].checked;
-//       return items.every((item) => item.checked === checked);
-//     }
-//     return true;
-//   }
-
-//   return {
-//     subscribe,
-//     set,
-//     update,
-//     setChecked: (checked) => update((items) => setChecked(items, checked)),
-//     isAllCheckedSimilar: () => isAllCheckedSimilar(get(store))
-//   };
-// }
-
-// const items = createStore();
-
-// export { checkable, items };
+export default store;

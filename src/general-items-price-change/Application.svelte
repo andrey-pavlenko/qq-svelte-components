@@ -1,10 +1,16 @@
 <script lang="ts">
   import { setContext } from 'svelte';
   import Form from './components/Form/Form.svelte';
+  import Item from './Item';
+  import itemsStore from './stores/items';
+  import List from './components/Items/List.svelte';
 
+  export let items: ItemSource[] = [];
   export let discounts: Discount[] = [];
   export let backUrl: string;
   export let submitUrl: string;
+
+  itemsStore.set(items.map((item) => new Item(item)));
 
   setContext(
     'discounts',
@@ -26,7 +32,7 @@
         <Form backUrl="{backUrl}" submitUrl="{submitUrl}" />
       </div>
       <div class="l-items">
-        <div>ItemsList</div>
+        <List />
       </div>
     </div>
   </div>

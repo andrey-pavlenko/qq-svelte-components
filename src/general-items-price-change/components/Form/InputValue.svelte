@@ -10,6 +10,7 @@
       type="number"
       step="any"
       min="0"
+      max="{type === 'percent' ? '100' : undefined}"
       placeholder="Положительное число"
       bind:value
     />

@@ -93,6 +93,9 @@
         type: type,
         value: value
       };
+    } else {
+      const { calcValue, ...rest } = $calcParamsStore;
+      $calcParamsStore = rest;
     }
   }
 

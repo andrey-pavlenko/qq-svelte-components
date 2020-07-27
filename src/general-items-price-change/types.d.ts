@@ -9,11 +9,6 @@ interface ItemSource {
   readonly currency: string;
 }
 
-// interface ItemResult extends ItemSource {
-//   checked: boolean;
-//   new_price: number;
-// }
-
 interface Discount {
   id: number;
   name: string;

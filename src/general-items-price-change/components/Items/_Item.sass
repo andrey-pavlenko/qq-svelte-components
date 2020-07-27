@@ -1,0 +1,23 @@
+.c-item__price,
+.c-item__price--init,
+.c-item__price--new
+  text-align: center !important
+
+td.c-item__price--new
+  color: transparent
+
+  &.is-checked
+    color: unset
+
+  &.has-error.is-checked
+    color: $g-text-error
+    background-color: $g-bg-error
+
+.c-item__title
+  max-width: 200px
+
+.c-title__name,
+.c-title__nights
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis

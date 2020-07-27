@@ -538,6 +538,28 @@ describe('Item', () => {
         round: { method: 'floor', to: 10 }
       })
     ).toBe(990);
+
+    expect(
+      new Item({
+        ...baseItem,
+        ...{ price: 124727, initial_price: 124727 }
+      }).getNewPrice({
+        action: 'markup',
+        priceKey: 'price',
+        round: { method: 'ceil', to: 1000 }
+      })
+    ).toBe(125000);
+
+    expect(
+      new Item({
+        ...baseItem,
+        ...{ price: 124727, initial_price: 124727 }
+      }).getNewPrice({
+        action: 'markup',
+        priceKey: 'price',
+        round: { method: 'floor', to: 1000 }
+      })
+    ).toBe(124000);
   });
 
   it('decrease', () => {
