@@ -1,8 +1,9 @@
 <script lang="ts">
-  import Item from '../../Item';
+  import { createEventDispatcher, tick } from 'svelte';
 
-  import { createEventDispatcher } from 'svelte';
+  import Item from '../../Item';
   import calcParams from '../../stores/calc-params';
+  import type { updateArrayBindingPattern } from 'typescript';
 
   export let item: Item;
   export let isLast: boolean = false;
@@ -16,6 +17,20 @@
       checked: (event.target as HTMLInputElement).checked,
       pos: item.pos
     });
+  }
+
+  function useTransition(node: HTMLElement, calcParams: CalcParams) {
+    return {
+      async update(calcParams) {
+        if (node.classList.contains('is-checked')) {
+          node.classList.remove('is-checked');
+          await tick();
+          setTimeout(() => {
+            node.classList.add('is-checked');
+          }, 0);
+        }
+      }
+    };
   }
 </script>
 
@@ -49,6 +64,7 @@
     class="c-item__price--new"
     class:is-checked="{item.checked}"
     class:has-error="{newPrice <= 0}"
+    use:useTransition="{$calcParams}"
   >
     {Item.formatNumber(newPrice)}
   </td>

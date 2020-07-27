@@ -17,7 +17,7 @@
 </script>
 
 <div class:hide="{!visible}">
-  <p class="text-warning">
+  <p class="text-warning l-help">
     Текущая цена всех туров будет заменена на исходную цену.
     <strong>Все скидки и наценки будут отменены.</strong>
   </p>

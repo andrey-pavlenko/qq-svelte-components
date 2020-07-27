@@ -63,7 +63,7 @@
 <div class:hide="{!visible}">
   <legend class="c-form-legend">Цена, участвуюшая в расчетах</legend>
   <PriceKey bind:value="{priceKey}" />
-  <p class="text-warning">
+  <p class="text-warning l-help">
     {priceKey === 'initial_price' ? 'Исходные' : 'Текущие'} цены всех туров
     будут умеличены на указанный процент или сумму в соответствии введенным
     значением.&#x20;
