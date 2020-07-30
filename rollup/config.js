@@ -46,7 +46,7 @@ function config(opts) {
       typescript({ sourceMap: !production }),
       !production && serve(),
       !production && livereload('public'),
-      production && terser(),
+      production && terser({ output: { comments: false } }),
       postcss({
         extract: true,
         minimize: production,
