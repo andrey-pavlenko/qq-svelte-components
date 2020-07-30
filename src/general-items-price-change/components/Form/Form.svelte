@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { tick } from 'svelte';
   import calcParamsStore from '../../stores/calc-params';
+  import itemsStore from '../../stores/items';
 
   import Pills from './Pills.svelte';
   import Discount from './Discount.svelte';
@@ -10,16 +10,56 @@
 
   export let backUrl: string;
   export let submitUrl: string;
+  export let error: string;
 
-  async function onCalcParamsChange(): Promise<void> {
-    await tick();
-    console.info('calcParamsStore', JSON.stringify($calcParamsStore, null, 2));
-  }
+  async function onSubmit(): Promise<void> {
+    let items: {
+      pos: number;
+      price: number;
+      new_price?: number;
+    }[] = $itemsStore
+      .filter((item) => item.checked)
+      .map((item) => ({
+        pos: item.pos,
+        price: item.price,
+        new_price: item.getNewPrice($calcParamsStore)
+      }));
+    if (items.length === 0) {
+      error = 'Не выбран ни один тур для изменения цены';
+      return;
+    }
+    if (items.some((item) => item.new_price <= 0)) {
+      error =
+        'После применения параметров скидки или наценки некоторые цены станут отрицательными или нулевыми';
+      return;
+    }
+    items = items.filter((item) => item.price !== item.new_price);
+    if (items.length === 0) {
+      error =
+        'С текущими пераметрами скидки, наценки или округления цены туров не изменились';
+      return;
+    }
+    items = items.map((item) => ({ pos: item.pos, price: item.new_price }));
+    if (!submitUrl) {
+      error =
+        'Отсутствует необходимый параметр submitUrl. Обратитесь в службу поддержки';
+      return;
+    }
+    error = undefined;
 
-  calcParamsStore.subscribe(onCalcParamsChange);
+    const formData = new FormData();
+    formData.append('items', JSON.stringify(items));
 
-  function onSubmit(): void {
-    console.info('onSubmit', submitUrl);
+    const response = await fetch(submitUrl, {
+      method: 'post',
+      body: formData
+    });
+
+    if (response.status >= 400) {
+      error = (await response.text()) || response.statusText;
+    } else {
+      window.location.assign(backUrl);
+    }
   }
 </script>
 

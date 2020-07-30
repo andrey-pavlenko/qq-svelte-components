@@ -44,7 +44,7 @@
   </td>
   <td class="c-item__title">
     <div class="c-title__name" title="{item.name}">{item.name}</div>
-    <div class="c-title__nights">{item.nights} ночей, с {item.checkinStr}</div>
+    <div class="c-title__nights">{item.nightsStr}, с {item.checkinStr}</div>
   </td>
   <td
     class="c-item__price--init"

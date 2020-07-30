@@ -9,7 +9,7 @@ const baseItem = {
   extra_nights: 0
 };
 
-describe('Item', () => {
+describe('Item getNewPrice', () => {
   it('revert', () => {
     expect(
       new Item({
@@ -599,4 +599,21 @@ describe('Item', () => {
       })
     ).toBe(1000);
   });
+});
+
+describe('Item pluralNights', () => {
+  expect(Item.pluralNights(0)).toBe('0 ночей');
+  expect(Item.pluralNights(1)).toBe('1 ночь');
+  expect(Item.pluralNights(2)).toBe('2 ночи');
+  expect(Item.pluralNights(4)).toBe('4 ночи');
+  expect(Item.pluralNights(5)).toBe('5 ночей');
+  expect(Item.pluralNights(19)).toBe('19 ночей');
+  expect(Item.pluralNights(21)).toBe('21 ночь');
+  expect(Item.pluralNights(10, 0)).toBe('10 ночей');
+  expect(Item.pluralNights(10, 1)).toBe('10+1 ночь');
+  expect(Item.pluralNights(10, 2)).toBe('10+2 ночи');
+  expect(Item.pluralNights(10, 4)).toBe('10+4 ночи');
+  expect(Item.pluralNights(10, 5)).toBe('10+5 ночей');
+  expect(Item.pluralNights(10, 19)).toBe('10+19 ночей');
+  expect(Item.pluralNights(10, 21)).toBe('10+21 ночь');
 });
