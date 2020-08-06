@@ -5,6 +5,7 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "importHelpers": true,
+    "target": "ES6",
     "module": "ESNext"
   }
 }
