@@ -4,13 +4,15 @@
   "scripts": {
     "test": "jest",
     "start": "sirv public --port 8080",
-    "build": "npm run build:general-items-price-change",
-    "dev": "npm run dev:general-items-price-change",
+    "build": "npm run build:list-of-quotes",
+    "dev": "npm run dev:list-of-quotes",
     "validate": "svelte-check",
     "build:application-first": "rimraf public/application-first && rollup -c src/application-first/rollup.config.js",
     "dev:application-first": "rimraf public/application-first && rollup -w -c src/application-first/rollup.config.js",
     "build:general-items-price-change": "rimraf public/general-items-price-change && rollup -c src/general-items-price-change/rollup.config.js",
-    "dev:general-items-price-change": "rimraf public/general-items-price-change && rollup -w -c src/general-items-price-change/rollup.config.js"
+    "dev:general-items-price-change": "rimraf public/list-of-quotes && rollup -w -c src/list-of-quotes/rollup.config.js",
+    "build:list-of-quotes": "rimraf public/list-of-quotes && rollup -c src/list-of-quotes/rollup.config.js",
+    "dev:list-of-quotes": "rimraf public/list-of-quotes && rollup -w -c src/list-of-quotes/rollup.config.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
