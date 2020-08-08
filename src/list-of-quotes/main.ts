@@ -1,3 +1,8 @@
 import './index.sass';
+import Application from './Application.svelte';
 
-console.info('List of quotes');
+const target = document.querySelector('main');
+
+new Application({
+  target
+});
