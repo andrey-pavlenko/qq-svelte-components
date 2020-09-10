@@ -4,3 +4,9 @@ interface Client {
   phone?: string;
   email?: string;
 }
+
+interface Texts {
+  contacts: string;
+  payment: string;
+  order: string;
+}
